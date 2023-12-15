@@ -11,9 +11,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
-        <ControlPanel />
-        <div className="pages">
+      <div className="pages">
           <Routes>
             <Route 
               path="/" 
@@ -21,6 +19,8 @@ function App() {
             />
           </Routes>
         </div>
+        <Header />
+        <ControlPanel />
         <Footer />
       </BrowserRouter>
     </div>
