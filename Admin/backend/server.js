@@ -1,11 +1,15 @@
-require('dotenv').config()
+require('dotenv').config({path: "../../.env"})
 
 const express = require('express')
 const mongoose = require('mongoose')
 const Routes = require("./router/routes")
+const cors = require("cors")
 
 // express app
 const app = express()
+
+// cors
+app.use(cors())
 
 // middleware
 app.use(express.json())

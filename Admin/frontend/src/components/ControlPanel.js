@@ -6,11 +6,19 @@ const ControlPanel = () => {
         [
             {
                 id: 0,
-                bg: "red"
+                bg: "1"
             },
             {
                 id: 1,
-                bg: "green"
+                bg: "2"
+            },
+            {
+                id: 2,
+                bg: "3"
+            },
+            {
+                id: 3,
+                bg: "4"
             }
         ]
     )
@@ -25,23 +33,24 @@ const ControlPanel = () => {
 
     return (
         <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="boxes">
-                {(provided) => (
-                    <ul ref={provided.innerRef} {...provided.droppableProps}>
-                        {box.map(({id, bg}, index) => 
-                            <Draggable key= {id} draggableId={id.toString()} index={index}>
-                                {(provided) => (
-                                    <li key={id} ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                                        <div className={`box ${bg}`}></div>
-                                    </li>
-                                )}
-                            </Draggable>
-                        )}
-                        {provided.placeholder}
-                    </ul>
-                )}
-                
-            </Droppable>
+            <div className="controlPanelBox">
+                <Droppable droppableId="boxes">
+                    {(provided) => (
+                        <ul ref={provided.innerRef} {...provided.droppableProps}>
+                            {box.map(({id, bg}, index) => 
+                                <Draggable key= {id} draggableId={id.toString()} index={index}>
+                                    {(provided) => (
+                                        <li key={id} ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
+                                            <div className={`box`}></div>
+                                        </li>
+                                    )}
+                                </Draggable>
+                            )}
+                            {provided.placeholder}
+                        </ul> 
+                    )}
+                </Droppable>
+            </div>
         </DragDropContext>
     )
 };

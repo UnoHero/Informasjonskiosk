@@ -1,4 +1,5 @@
  const express = require("express")
+ const {createTrue} = require("../controllers/controller")
 
  const router = express.Router()
 
@@ -6,8 +7,6 @@
     res.json({mssg:"working"})
  })
 
- router.post("/", (req, res) => {
-    res.json({mssg: "Post"})
- })
+ router.post('/api/updateData', createTrue)
  
  module.exports = router
