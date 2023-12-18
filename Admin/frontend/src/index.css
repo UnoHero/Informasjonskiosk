@@ -15,6 +15,22 @@ body {
   overflow: hidden;
 }
 
+.box {
+  background: gray;
+  width: 200px;
+  height: 100px;
+  margin: 10px;
+}
+
+.controlPanelBox {
+  background-color: lightgray;
+  max-width: 70%;
+  margin: auto;
+  padding: 1%;
+  position:relative;
+  top:80px;
+}
+
 header .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -45,3 +61,34 @@ footer {
   gap: 100px;
 }
 
+ul {
+  list-style: none;
+  padding-left: 5px;
+}
+
+
+.ViewBox {
+  background-color: #1aac83;
+  width: 600px;
+  height: 400px;
+  max-width: 600px;
+  max-height: 400px;
+  margin: auto;
+  position: relative;
+  bottom: 370px;
+  left: 240px;
+}
+
+.UploadButton {
+  padding: 5px;
+  margin: auto;
+  position:relative;
+  left: 240px;
+  bottom: 125px;
+}
+
+#freeform {
+  margin-top:150px;
+  margin-left: auto;
+
+}

@@ -5,15 +5,14 @@ import Home from './pages/Home'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ControlPanel from './components/ControlPanel'
+import View from "./components/ViewBox"
 
 function App() {
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
-        <ControlPanel />
-        <div className="pages">
+      <div className="pages">
           <Routes>
             <Route 
               path="/" 
@@ -21,6 +20,9 @@ function App() {
             />
           </Routes>
         </div>
+        <Header />
+        <ControlPanel />
+        <View />
         <Footer />
       </BrowserRouter>
     </div>
