@@ -1,8 +1,8 @@
 
 const media = () => {
     return (
-        <div>
-            <img src={`${wolf}.jpeg`}></img>
+        <div className="true">
+            <img className="pic" src="wolf.jpeg"></img>
         </div>
     )
 }
