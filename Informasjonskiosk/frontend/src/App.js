@@ -1,11 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-// pages & components
+// pages 
 import Home from './pages/Home'
+
+// components
+import CoC from "./components/CoC"
+import Medie from "./components/Medie"
 import Swgoh from "./components/Swgoh"
+import Weather from "./components/Weather"
 
 
 function App() {
+
+  let components = [CoC, Medie, Swgoh, Wether] 
+
   return (
     <div className="App">
       <div className="App">
@@ -18,7 +26,7 @@ function App() {
               />
             </Routes>
           </div>
-          <Swgoh/>
+          
         </BrowserRouter>
       </div>
     </div>

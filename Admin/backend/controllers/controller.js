@@ -1,3 +1,5 @@
+require('dotenv').config({path: "../../.env"})
+
 const Model = require("../models/dataModel");
 const mongoose = require("mongoose");
 
@@ -34,7 +36,7 @@ const getCoC = async (req, res) => {
     try {
         let result = [];
 
-        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjI3ZmYwZTA2LWRjZTMtNGZkMC1iNTM4LTAzOTU2ODIwZTY0YSIsImlhdCI6MTcwNTQ5MjM5Nywic3ViIjoiZGV2ZWxvcGVyLzQwODZmYjZjLTY5YmEtNjYwZS04ZDI3LTBhYTJlYmYzZTBjMyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE1NS41NS41MS4yMjAiXSwidHlwZSI6ImNsaWVudCJ9XX0.u7QGt_3NaX8zvVwUJCi-S3ZeFXJmndexPi9mARPSWhJ3dmOyFAwryKy-IkP4alZ6OwQEvM-RxuLA_hyj9NR2Ug';
+        const token = process.env.CoC;
 
         const response = await fetch("https://api.clashofclans.com/v1/players/%232C8V28JUY", {
             headers: {
@@ -44,13 +46,39 @@ const getCoC = async (req, res) => {
 
         const data = await response.json();
 
-        console.log(data);
-        res.json(data);
+        // Exclude specific properties from the data object
+        const { role, warPreference, warStars, attackWins, defenseWins, donations, achievements, playerHouse, troops, spells, heroEquipment, heroes, ...restOfData  } = data;
+
+        // Remove 'equipment' and 'maxLevel' properties from each hero
+        const filteredHeroes = heroes.map(({ equipment, maxLevel, ...restOfHero }) => restOfHero);
+
+        // Combine the filtered heroes with the rest of the data
+        const filteredData = { ...restOfData, heroes: filteredHeroes };
+
+        result.push(filteredData);
+
+        res.json(result);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
 
+const Weather = async (req, res) => {
+    try {
+
+        let result = [];
+
+        const response = await fetch("")
+
+        const data = await response.json();
+
+        result.push(data)
+
+        res.json(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
 
 module.exports = {
     createTrue,
