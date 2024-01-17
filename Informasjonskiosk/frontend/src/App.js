@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // pages & components
 import Home from './pages/Home'
-import Media from "./components/Medie"
+import Swgoh from "./components/Swgoh"
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
               />
             </Routes>
           </div>
-          <Media/>
+          <Swgoh/>
         </BrowserRouter>
       </div>
     </div>
