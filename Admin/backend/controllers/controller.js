@@ -6,8 +6,8 @@ const mongoose = require("mongoose");
 const createTrue = async (req, res) => {
     const { value } = req.body;
     try {
-        const suppe = await Model.create({ value });
-        res.status(200).send(suppe);
+        const createDoc = await Model.create({ value });
+        res.status(200).send(createDoc);
     } catch (error) {
         res.status(404).send({ error: error.message });
     }
