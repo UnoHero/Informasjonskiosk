@@ -9,7 +9,7 @@
     "KioskBack": "",
     "KioskFront": "cd ./Kiosk/frontend && set PORT=3000 && react-scripts start",
     "dev": "concurrently \"npm:AdminBack\" \"npm:AdminFront\" \"npm:KioskBack\" \"npm:KioskFront\"",
-    "install": "concurrently \"npm install\" \"cd ./Admin/frontend && npm install\" \"cd ./Kiosk/frontend && npm install\""
+    "ins": "concurrently \"npm install\" \"cd ./Admin/frontend && npm install\" \"cd ./Kiosk/frontend && npm install\""
   },
   "keywords": [],
   "author": "",
