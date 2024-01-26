@@ -5,16 +5,21 @@
   "main": "",
   "scripts": {
     "AdminBack": "cd  ./Admin/backend/ && nodemon server.js",
-    "AdminFront": "cd ./Admin/frontend && set PORT=3003 && react-scripts start",
+    "AdminFront": "cd ./Admin/frontend && PORT=3003 react-scripts start",
     "KioskBack": "",
-    "KioskFront": "cd ./Kiosk/frontend && set PORT=3000 && react-scripts start",
-    "dev": "concurrently \"npm:AdminBack\" \"npm:AdminFront\" \"npm:KioskBack\" \"npm:KioskFront\"",
-    "ins": "concurrently \"npm install\" \"cd ./Admin/frontend && npm install\" \"cd ./Kiosk/frontend && npm install\""
+    "KioskFront": "cd ./Kiosk/frontend && react-scripts start",
+    "dev": "concurrently \"npm run AdminBack\" \"npm run AdminFront\" \"npm run KioskBack\" \"npm run KioskFront\"",
+    "ins": "npm install && cd ./Admin/frontend && npm install && cd ../../Kiosk/frontend && npm install",
+    "all": "npm run ins && npm run dev",
+    "test": "sudo -i sh -c ls"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -22,14 +27,12 @@
     "mongoose": "^8.0.3",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.2",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
+    "wait-on": "^7.2.0",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
