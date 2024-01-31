@@ -31,12 +31,14 @@ const View = () => {
             <div>
                 <div>
                     <label htmlFor="type">Type of Slide</label>
-                    <select name="membership" id="membership">
-                        <option value="media" defaultValue>Media</option>
+                    <select name="category" id="category">
+                        <option value="Media" defaultValue>Media</option>
                         <option value="SWgoh">Swgoh</option>
                         <option value="Vær">Vær</option>
-                        <option value="video">Video</option>
+                        <option value="text">Text</option>
+                        <option value="CoC">CoC</option>
                     </select>
+                    
                 </div>
 
                 <button onClick={handleButtonClick} className="UploadButton">

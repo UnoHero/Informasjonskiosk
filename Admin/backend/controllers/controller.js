@@ -13,6 +13,7 @@ const createTrue = async (req, res) => {
     }
 };
 
+
 const getSwgoh = async (req, res) => {
     try {
         let result = []
@@ -33,12 +34,19 @@ const getSwgoh = async (req, res) => {
 }
 
 const getCoC = async (req, res) => {
+
+    const name = req.params.name
+
     try {
         let result = [];
 
+        const gamer = await Model.findOne({ name: name });
+
+        let cocId = gamer.coc;
+
         const token = process.env.CoC;
 
-        const response = await fetch("https://api.clashofclans.com/v1/players/%232C8V28JUY", {
+        const response = await fetch(`https://api.clashofclans.com/v1/players/%23${cocId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -46,11 +54,11 @@ const getCoC = async (req, res) => {
 
         const data = await response.json();
 
-        // Exclude specific properties from the data object
-        const { role, warPreference, warStars, attackWins, defenseWins, donations, achievements, playerHouse, troops, spells, heroEquipment, heroes, ...restOfData  } = data;
+        // Check if 'heroes' array is defined before mapping
+        const filteredHeroes = data.heroes ? data.heroes.map(({ equipment, maxLevel, ...restOfHero }) => restOfHero) : [];
 
-        // Remove 'equipment' and 'maxLevel' properties from each hero
-        const filteredHeroes = heroes.map(({ equipment, maxLevel, ...restOfHero }) => restOfHero);
+        // Exclude specific properties from the data object
+        const { role, warPreference, warStars, attackWins, defenseWins, donations, achievements, playerHouse, troops, spells, heroEquipment, heroes, ...restOfData } = data;
 
         // Combine the filtered heroes with the rest of the data
         const filteredData = { ...restOfData, heroes: filteredHeroes };
@@ -62,6 +70,7 @@ const getCoC = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
 
 const Weather = async (req, res) => {
     try {

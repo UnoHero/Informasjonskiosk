@@ -9,7 +9,9 @@
 
  router.get("/swgoh", getSwgoh)
 
- router.get("/CoC", getCoC)
+ router.get("/CoC/:name", getCoC)
+
+
 
  router.post('/api/updateData', createTrue)
  
