@@ -11,8 +11,6 @@
 
  router.get("/CoC/:name", getCoC)
 
-
-
  router.post('/api/updateData', createTrue)
  
  module.exports = router

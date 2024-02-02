@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "AdminBack": "cd  ./Admin/backend/ && nodemon server.js",
-    "AdminFront": "cd ./Admin/frontend && set PORT=3003 && react-scripts start",
+    "AdminFront": "cd ./Admin/frontend && PORT=3003 react-scripts start",
     "KioskBack": "",
     "KioskFront": "cd ./Kiosk/frontend && react-scripts start",
     "Admin": "concurrently \"npm run AdminBack\" \"npm run AdminFront\"", 
@@ -26,16 +26,10 @@
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.2",
     "wait-on": "^7.2.0",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

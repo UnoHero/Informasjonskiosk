@@ -12,7 +12,7 @@ import Weather from "./components/Weather"
 
 function App() {
 
-  let components = [CoC, Medie, Swgoh, Wether] 
+  let components = [CoC, Medie, Swgoh, Weather] 
 
   return (
     <div className="App">
@@ -26,7 +26,6 @@ function App() {
               />
             </Routes>
           </div>
-          
         </BrowserRouter>
       </div>
     </div>
