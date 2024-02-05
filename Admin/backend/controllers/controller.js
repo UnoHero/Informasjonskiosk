@@ -1,12 +1,15 @@
 require('dotenv').config({path: "../../.env"})
 
-const Model = require("../models/dataModel");
+const kioskModel = require("../models/dataModel");
+const pageModel = require("../models/pageModel");
+const playerModel = require("../models/playerModel")
+
 const mongoose = require("mongoose");
 
 const createTrue = async (req, res) => {
     const { value } = req.body;
     try {
-        const createDoc = await Model.create({ value });
+        const createDoc = await kioskModel.create({ value });
         res.status(200).send(createDoc);
     } catch (error) {
         res.status(404).send({ error: error.message });
@@ -17,17 +20,17 @@ const createTrue = async (req, res) => {
 const getSwgoh = async (req, res) => {
     try {
         let result = []
-      const response = await fetch("https://swgoh.gg/api/characters/");
-      const data = await response.json();
-      
-      data.forEach(e => {
-        if (e.alignment == "Dark Side") {
-            delete e.gear_levels
-            result.push(e)
-        }
-      });
-      console.log(result);
-      res.json(result)
+        const response = await fetch("https://swgoh.gg/api/characters/");
+        const data = await response.json();
+        
+        data.forEach(e => {
+            if (e.alignment == "Dark Side") {
+                delete e.gear_levels
+                result.push(e)
+            }
+        });
+        console.log(result);
+        res.json(result)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
@@ -40,8 +43,8 @@ const getCoC = async (req, res) => {
     try {
         let result = [];
 
-        const gamer = await Model.findOne({ name: name });
-
+        const gamer = await playerModel.findOne({ name: name });
+        console.log(gamer);
         let cocId = gamer.coc;
 
         const token = process.env.CoC;
@@ -89,8 +92,52 @@ const Weather = async (req, res) => {
     }
 }
 
+const players = async (req, res) => {
+    try {
+        const gamers = await playerModel.find();
+
+        // Filter players who have the 'coc' property
+        const playersWithCoc = gamers.filter(player => player.coc);
+
+        // Extracting only the names from each filtered player object
+        const result = playersWithCoc.map(player => player.name);
+
+        console.log(result);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+const spesPlayer = async (req, res) => {
+    const name = req.params.name;
+    try {
+        const gamer = await playerModel.findOne({ name: name });
+        console.log(gamer);
+
+        if (gamer) {
+            console.log(gamer);
+            let cocId = gamer.coc;
+
+            res.status(200).json(cocId);
+        } else {
+            // Player not found
+            res.status(404).json({ error: 'Player not found' });
+        }
+        
+    } catch (error) {
+        // Handle other errors
+        res.status(400).json({ error: error.message });
+    }
+};
+
+
+
 module.exports = {
     createTrue,
     getSwgoh,
-    getCoC
+    getCoC,
+    players,
+    spesPlayer
 };

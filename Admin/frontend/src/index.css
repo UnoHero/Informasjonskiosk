@@ -92,3 +92,7 @@ ul {
   margin-left: auto;
 
 }
+
+.selected {
+  color:red;
+}
