@@ -1,11 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-// pages & components
 import Home from './pages/Home'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import ControlPanel from './components/ControlPanel'
-import View from "./components/ViewBox"
 
 function App() {
 
@@ -20,10 +15,7 @@ function App() {
             />
           </Routes>
         </div>
-        <Header />
-        <ControlPanel />
-        <View />
-        <Footer />
+        
       </BrowserRouter>
     </div>
   );

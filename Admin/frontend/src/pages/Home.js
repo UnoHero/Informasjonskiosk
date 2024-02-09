@@ -1,10 +1,24 @@
-const Home = () => {
+import { useSpring, animated } from "react-spring";
+import styled from "styled-components";
 
-    return (
-      <div className="home">
-        <h1>Welcome</h1>
-      </div>
-    )
-  }
-  
-  export default Home
+// pages & components
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import ControlPanel from '../components/ControlPanel'
+
+const Control = styled.div`
+  margin: auto;
+`
+const Home = () => {
+  return (
+    <div className="home">
+      <Header />
+      <Control>
+        <ControlPanel/> 
+      </Control>
+      <Footer />
+    </div>
+  );
+}
+
+export default Home;
