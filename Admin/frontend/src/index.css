@@ -1,98 +1,152 @@
-/* google font */
+/* Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-/* layout */
+/* Layout */
 :root {
-  --primary: #1aac83;
-  --error: #e7195a;
+  --primary: #001e80 ;
+  --secondary: #ff5705 ;
+  --background: #808080 ;
+  --accent: #99ACff ;
+}
+
+html {
+  height: 100%;
 }
 
 body {
-  background: #f1f1f1;
+  background: var(--background);
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif;
   padding: 0;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .box {
-  background: gray;
-  width: 200px;
-  height: 100px;
+  background: var(--background);
+  height: 10%;
+  max-width: 100%;
+  max-height: 100%;
+  min-height: 100px;
   margin: 10px;
 }
 
 .controlPanelBox {
-  background-color: lightgray;
-  max-width: 70%;
-  margin: auto;
-  padding: 1%;
-  position:relative;
-  top:80px;
+  max-width: 200px;
+  width: 100%;
 }
 
-header .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+h1{
+  text-align: center;
+  color: white;
+  margin: 0 0 100px 0 ;
+  padding: 5px;
 }
 
-header a {
-  color: #333;
-  text-decoration: none;
+h2{
+  text-align: center;
+  font-weight: 500;
+}
+
+header {
+  background-color: var(--primary);
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 footer {
+  background-color: var(--secondary);
+  margin: auto;
   position: absolute;
-  bottom: 0%;
-}
-.pages{
-  max-width: 1400px;
-  padding: 20px;
-  margin: 0 auto;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  color:  white;
 }
 
-/* homepage */
-.home {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 100px;
+.pages {
+  max-width: 100%;
+  margin: auto;
 }
 
 ul {
   list-style: none;
   padding-left: 5px;
+  width: 100%;
+  padding: 0;
 }
-
 
 .ViewBox {
-  background-color: #1aac83;
-  width: 600px;
-  height: 400px;
-  max-width: 600px;
-  max-height: 400px;
+  background-color: var(--accent);
   margin: auto;
-  position: relative;
-  bottom: 370px;
-  left: 240px;
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  min-height: 100px;
+  min-width: 100px;
+  width: 100%;
 }
 
-.UploadButton {
-  padding: 5px;
+.ViewIndex {
   margin: auto;
-  position:relative;
-  left: 240px;
-  bottom: 125px;
+  display: grid;
+  grid-template-columns: repeat(20,25px);
+  grid-template-rows: repeat(15, 25px);
+  justify-content: center;
+}
+
+.types {
+  grid-column: 2 /  span 6;
+}
+
+.UploadPic {
+  grid-row: 6 / span 1;
+  grid-column: 8 / span 6;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0062cc;
+  }
 }
 
 #freeform {
-  margin-top:150px;
-  margin-left: auto;
+  grid-row: 10 / span 4;
+  grid-column: 2 / span 18;
+}
 
+.playerTab {
+  grid-row: 4 / span 3;
+  grid-column: 2 / span 5;
 }
 
 .selected {
-  color:red;
+  color: red;
+}
+
+.dropzone {
+  grid-row: 4 / span 3;
+  grid-column: 8 / span 6;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.dropzone p {
+  padding: 0;
+  margin: 0;
 }
