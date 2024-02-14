@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const CoC = () => {
   const [userData, setUserData] = useState(null); // Initialize with null
-  const user = "Noah";
+  const user = "Scott";
 
   async function cocUser() {
     try {

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
-import { useDropzone } from "react-dropzone";
 
 const ControlSection = styled.div`
   margin: auto;
@@ -13,12 +11,34 @@ const ControlSection = styled.div`
   max-width: 60%;
 `;
 
+const ToDB = styled.button`
+  display: block;
+  margin: 0 auto;
+  margin-top: 2.5%;
+  padding: 1%;
+  background-color: #808080; /* Dark gray */
+  border-radius: 10px;
+  font-size: 18px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #cccccc; /* Light gray */
+    opacity: 0.8;
+  }
+`;
+
 const View = () => {
   const [player, setPlayer] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Media");
   const [ID, setID] = useState("");
   const [players, setPlayers] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  let slideNumber = 1
+
+  let files = {}
+  let slideOrientation = {}
 
   const sendToKiosk = async (file) => {
     try {
@@ -50,6 +70,10 @@ const View = () => {
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
+
+  const sendHandler = () => {
+    sendToKiosk(slideOrientation, files)
+  }
 
   useEffect(() => {
     const getCoCID = async () => {
@@ -118,8 +142,18 @@ const View = () => {
       setBox(initialBoxState);
     }, []);
     
+    const Slide = ({ slideNumber }) => {
+      return (
+        <div className="slide">
+          <h2>Slide {slideNumber}</h2>
+          {/* Rest of the Slide component */}
+        </div>
+      );
+    };
+    
     return (
       <>
+      {/* Drag and drop boxes */}
         <ControlSection>
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <div className="controlPanelBox">
@@ -128,21 +162,27 @@ const View = () => {
                   <ul ref={provided.innerRef} {...provided.droppableProps}>
                     {box.map(({ id, bg }, index) => (
                       <Draggable key={id} draggableId={id.toString()} index={index}>
-                        {(provided) => (
-                          <li
-                            key={id}
-                            ref={provided.innerRef}
-                            {...provided.dragHandleProps}
-                            {...provided.draggableProps}
-                            onClick={() => setSelectedBox(id)}
-                            className={selectedBox === id ? "selected" : ""}
+                      {(provided) => (
+                        <li
+                          key={id}
+                          ref={provided.innerRef}
+                          {...provided.dragHandleProps}
+                          {...provided.draggableProps}
+                          onClick={() => {
+                            setSelectedBox(id);
+                          }}
+                          className={selectedBox === id ? "selected" : ""}
+                        >
+                          <div
+                            className={`box ${selectedBox === id ? "selected" : ""}`}
+                            style={{ backgroundColor: `#${bg}` }}
+                            data-id={id}
                           >
-                            <div className={`box`} style={{ backgroundColor: `#${bg}` }}>
-                              {bg}
-                            </div>
-                          </li>
-                        )}
-                      </Draggable>
+                            {bg}
+                          </div>
+                        </li>
+                      )}
+                    </Draggable>
                     ))}
                     {provided.placeholder}
                   </ul>
@@ -150,8 +190,10 @@ const View = () => {
               </Droppable>
             </div>
           </DragDropContext>
+
+          {/* Main slide selector and buttons */}
           <div className="ViewBox">
-            <h2>Slide</h2>
+            <Slide slideNumber={selectedBox} />
             <div className="ViewIndex">
               <div className="types">
                 <label htmlFor="type">Type of Slide</label>
@@ -181,7 +223,7 @@ const View = () => {
                         </option>
                       ))}
                     </select>
-                    <textarea id="ID" name="ID" rows="1" cols="10" placeholder="Enter ID" value={ID}></textarea>
+                    <textarea id="ID" name="ID" rows="1" cols="10" placeholder="Enter ID" value={ID} onChange={(e) => setID(e.target.value)}></textarea>
                   </div>
                 </>
               ) : selectedCategory === "Swgoh" ? (
@@ -217,7 +259,7 @@ const View = () => {
             </div>
           </div>
         </ControlSection>
-        <button> Upload </button>
+        <ToDB onClick={() => sendHandler()}>Upload</ToDB>
       </>
     );
   };

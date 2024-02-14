@@ -24,7 +24,7 @@ const getSwgoh = async (req, res) => {
         const data = await response.json();
         
         data.forEach(e => {
-            if (e.alignment == "Dark Side") {
+            if (e.alignment == "Light Side") {
                 delete e.gear_levels
                 result.push(e)
             }
