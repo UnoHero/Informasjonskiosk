@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
@@ -34,11 +34,19 @@ const View = () => {
   const [ID, setID] = useState("");
   const [players, setPlayers] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [chosen, setChosen] = useState()
 
   let slideNumber = 1
 
   let files = {}
   let slideOrientation = {}
+
+  const handleButtonClick = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      sendToKiosk(file);
+    }
+  };
 
   const sendToKiosk = async (file) => {
     try {
@@ -57,13 +65,6 @@ const View = () => {
       }
     } catch (error) {
       console.error("Error sending data:", error);
-    }
-  };
-
-  const handleButtonClick = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      sendToKiosk(file);
     }
   };
 
@@ -115,7 +116,7 @@ const View = () => {
       { id: 4, bg: "4" },
     ]);
 
-    const [selectedBox, setSelectedBox] = useState(1);
+    const [selectedBox, setSelectedBox] = useState("1");
 
     function handleOnDragEnd(result) {
       if (!result.destination) return;
@@ -126,7 +127,7 @@ const View = () => {
         item.bg = (index + 1).toString();
       });
       setBox(newBox);
-      setSelectedBox(draggedItem.id);
+      setSelectedBox(newBox[result.destination.index].bg);
     }
 
     const handleGetPlayer = (event) => {
@@ -164,19 +165,19 @@ const View = () => {
                       <Draggable key={id} draggableId={id.toString()} index={index}>
                       {(provided) => (
                         <li
-                          key={id}
+                          key={bg}
                           ref={provided.innerRef}
                           {...provided.dragHandleProps}
                           {...provided.draggableProps}
                           onClick={() => {
-                            setSelectedBox(id);
+                            setSelectedBox(bg);
                           }}
-                          className={selectedBox === id ? "selected" : ""}
+                          className={selectedBox === bg ? "selected" : ""}
                         >
                           <div
-                            className={`box ${selectedBox === id ? "selected" : ""}`}
+                            className={`box ${selectedBox === bg ? "selected" : ""}`}
                             style={{ backgroundColor: `#${bg}` }}
-                            data-id={id}
+                            data-id={bg}
                           >
                             {bg}
                           </div>
@@ -243,12 +244,12 @@ const View = () => {
                 </div>
               ) : (
                 <>
-                  <label htmlFor="imageInput" className="UploadPic">
+                  <label htmlFor="mediaInput" className="UploadPic">
                     Upload Picture
                     <input
                       type="file"
-                      id="imageInput"
-                      accept="image/*"
+                      id="mediaInput"
+                      accept="image/*, video/*"
                       onChange={handleButtonClick}
                       style={{ display: "none" }}
                     />
