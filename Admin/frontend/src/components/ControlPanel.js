@@ -81,8 +81,8 @@ const View = () => {
       try {
         if (player) {
           const response = await fetch(`http://localhost:3001/api/player/${player}`);
-          const ID = await response.json();
-          setID(ID);
+          const fetchedID = await response.json();
+          setID(fetchedID);
         }
       } catch (error) {
         console.error("Error fetching CoC ID:", error);
@@ -93,6 +93,10 @@ const View = () => {
       getCoCID();
     }
   }, [player, selectedCategory]);
+
+  const handleGetPlayer = (event) => {
+    setPlayer(event.target.value);
+  };
 
   useEffect(() => {
     const getPlayers = async () => {
@@ -129,10 +133,6 @@ const View = () => {
       setBox(newBox);
       setSelectedBox(newBox[result.destination.index].bg);
     }
-
-    const handleGetPlayer = (event) => {
-      setPlayer(event.target.value);
-    };
 
     useEffect(() => {
       // Set the initial state of the `bg` property for each box based on its index

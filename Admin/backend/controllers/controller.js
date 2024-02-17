@@ -132,12 +132,60 @@ const spesPlayer = async (req, res) => {
     }
 };
 
+const allSlides = async (req, res) => {
+    try {
+        const slides = await pageModel.find();
 
+        if (slides) {
+            console.log(slides);
+            res.status(200).json({slides})
+        } else {
+            res.status(404).json({ error: error.message})
+        }
+        
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+const oneSlide = async ( req, res ) => {
+    const slideOrder = req.params.num;
+    try {
+        const slide = await pageModel.findOne({ order: slideOrder})
+
+        if (slide) {
+            res.status(200).json(slide)
+        } else {
+            res.status(404).json({ error: error.message})
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+};
+
+const updateSlide = async ( req, res ) => {
+    const slideOrder = req.params.num;
+    const updateData = req.body;
+    try {
+        const updatedSlide = await pageModel.findOneAndUpdate({ order: slideOrder}, updateData, { new: true});
+
+        if (slide) {
+            res.status(200).json(updatedSlide)
+        } else {
+            res.status(404).json({ error:'Slide not found' })
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
 
 module.exports = {
     createTrue,
     getSwgoh,
     getCoC,
     players,
-    spesPlayer
+    spesPlayer,
+    allSlides,
+    oneSlide,
+    updateSlide
 };

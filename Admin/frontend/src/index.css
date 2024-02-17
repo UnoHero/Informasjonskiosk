@@ -123,6 +123,11 @@ ul {
 #freeform {
   grid-row: 10 / span 4;
   grid-column: 2 / span 18;
+  resize: none;
+}
+
+#ID {
+  resize: none;
 }
 
 .playerTab {
