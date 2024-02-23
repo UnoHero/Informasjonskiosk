@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const ControlSection = styled.div`
   margin: auto;
+  margin-top: 2%;
   padding: 1%;
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -23,7 +24,25 @@ const ToDB = styled.button`
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: #cccccc; /* Light gray */
+    background-color: #cccccd; /* Light gray */
+    opacity: 0.8;
+  }
+`;
+
+const Save = styled.button `
+  margin: 0 auto;
+  background-color: #808080; /* Dark gray */
+  border-radius: 10px;
+  font-size: 18px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+
+  grid-row: 15;
+  grid-column: 9 / span 4;
+
+
+  &:hover {
+    background-color: #ccffcc; /* Light gray */
     opacity: 0.8;
   }
 `;
@@ -35,11 +54,12 @@ const View = () => {
   const [players, setPlayers] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [chosen, setChosen] = useState()
+  const [saved, setSaved] = useState();
+  const [dataToSend, SetDataToSend] = useState();
 
   let slideNumber = 1
 
   let files = {}
-  let slideOrientation = {}
 
   const handleButtonClick = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -73,7 +93,7 @@ const View = () => {
   };
 
   const sendHandler = () => {
-    sendToKiosk(slideOrientation, files)
+    sendToKiosk()
   }
 
   useEffect(() => {
@@ -146,12 +166,31 @@ const View = () => {
     const Slide = ({ slideNumber }) => {
       return (
         <div className="slide">
-          <h2>Slide {slideNumber}</h2>
+          <h3>Slide {slideNumber}</h3>
           {/* Rest of the Slide component */}
         </div>
       );
     };
     
+    const saveHandler = async (event) => {
+      let pages = [
+        { _id: "65be0a0e338c753757082fb4", value: "", order: 1, show: true }, 
+        { _id: "65be0aa0338c753757082fb5", value: "", order: 2, show: true }, 
+        { _id: "65be0b788d27f07931c064b1", value: "", order: 3, show: true }, 
+        { _id: "65be0ba68d27f07931c064b2", value: "", order: 4, show: true }
+      ]
+
+      try {
+        const sendData = await fetch(`http://localhost:3001/page/${order}`, {
+          method: "patch",
+          body: dataToSend,
+        });
+      } catch (error) {
+        console.error("Error sending data:", error);
+      }
+      
+    };
+
     return (
       <>
       {/* Drag and drop boxes */}
@@ -257,6 +296,7 @@ const View = () => {
                   <textarea id="freeform" name="freeform" rows="4" cols="50" placeholder="Enter text here..."></textarea>
                 </>
               )}
+              <Save onClick={() => saveHandler()}>Save</Save>
             </div>
           </div>
         </ControlSection>

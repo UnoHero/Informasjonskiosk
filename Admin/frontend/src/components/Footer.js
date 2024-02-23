@@ -1,9 +1,16 @@
+import styled from "styled-components";
+
+const FooterText = styled.p `
+  padding: 10px;
+`;
+
+
 const Footer = () => {
 
     return (
       <footer>
         <div className="Footer">
-        <p>&#169; Scott</p>
+        <FooterText>&#169; Scott</FooterText>
         </div>
       </footer>
     )
