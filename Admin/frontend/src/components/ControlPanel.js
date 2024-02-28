@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const ControlSection = styled.div`
   margin: auto;
@@ -57,6 +58,9 @@ const View = () => {
   const [saved, setSaved] = useState();
   const [dataToSend, SetDataToSend] = useState();
 
+  const { user } = useAuthContext()
+
+
   let slideNumber = 1
 
   let files = {}
@@ -73,7 +77,7 @@ const View = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await fetch("http://localhost:3001/api/updateData", {
+      const response = await fetch("http://localhost:3001/api/admin/updateData", {
         method: "POST",
         body: formData,
       });
@@ -100,7 +104,9 @@ const View = () => {
     const getCoCID = async () => {
       try {
         if (player) {
-          const response = await fetch(`http://localhost:3001/api/player/${player}`);
+          const response = await fetch(`http://localhost:3001/api/admin/player/${player}`, {
+            headers: {"Authorization": `Bearer ${user.token}` },
+          });
           const fetchedID = await response.json();
           setID(fetchedID);
         }
@@ -121,7 +127,9 @@ const View = () => {
   useEffect(() => {
     const getPlayers = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/players");
+        const response = await fetch("http://localhost:3001/api/admin/players", {
+          headers: {"Authorization": `Bearer ${user.token}` },
+        });
         const data = await response.json();
         setPlayers(data);
       } catch (error) {
@@ -129,8 +137,10 @@ const View = () => {
       }
     };
 
-    getPlayers();
-  }, []);
+    if (user) {
+      getPlayers();
+    }
+  }, [user]);
 
   const ControlPanel = () => {
     const [box, setBox] = useState([
@@ -181,7 +191,7 @@ const View = () => {
       ]
 
       try {
-        const sendData = await fetch(`http://localhost:3001/page/${order}`, {
+        const sendData = await fetch(`http://localhost:3001/api/admin/page/${pages.order}`, {
           method: "patch",
           body: dataToSend,
         });

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 // pages & components
 import Header from '../components/Header'
