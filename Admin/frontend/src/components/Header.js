@@ -40,7 +40,7 @@ const Header = () => {
         <nav>
           { user && (
             <div>
-              <span>{user.email}</span>
+              <span>{user.name}</span>
               <button onClick={handleClick}>Log out</button>
             </div>
           )}

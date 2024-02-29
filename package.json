@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "AdminBack": "cd  ./Admin/backend/ && nodemon server.js",
-    "AdminFront": "cd ./Admin/frontend && set PORT=3003 && react-scripts start",
+    "AdminFront": "cd ./Admin/frontend && PORT=3003 react-scripts start",
     "KioskBack": "",
     "KioskFront": "cd ./Kiosk/frontend && react-scripts start",
     "Admin": "concurrently \"npm run AdminBack\" \"npm run AdminFront\"",
