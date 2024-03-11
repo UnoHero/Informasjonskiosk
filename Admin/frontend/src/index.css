@@ -153,3 +153,24 @@ ul {
 .sandBox {
   background-color: black;
 }
+
+nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0.5% 0 0.5% 0;
+}
+
+.Grid {
+  display: grid;
+  grid-column: 4 / span 2;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.Name {
+  text-align: center;
+  margin: auto;
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: whitesmoke;
+  text-decoration-style: wavy;
+}
