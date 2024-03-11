@@ -51,14 +51,22 @@ header {
 }
 
 footer {
-  background-color: var(--secondary);
-  margin: auto;
-  position: relative;
-  top: 100%;
+  background-color: var(--secondary); /* Assuming you have defined a CSS variable for secondary color */
+  color: white;
   text-align: center;
+  padding: 5px;
+  position: fixed; /* Fixed position keeps the footer at the bottom of the viewport */
+  left: 0;
+  bottom: 0;
   width: 100%;
-  color:  white;
+
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    padding: 10px; /* Decrease padding on smaller screens */
+  }
 }
+
+
 
 .pages {
   max-width: 100%;
@@ -171,6 +179,6 @@ nav {
   margin: auto;
   color: white;
   text-decoration: underline;
-  text-decoration-color: whitesmoke;
+  text-decoration-color: whitesmoke; /* You can change this color */
   text-decoration-style: wavy;
 }
