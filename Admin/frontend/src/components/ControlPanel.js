@@ -58,6 +58,39 @@ const View = () => {
   const [saved, setSaved] = useState();
   const [dataToSend, SetDataToSend] = useState();
 
+ // react beutiful dnd boxes
+  const [box, setBox] = useState([
+    { id: 1, bg: "1" },
+    { id: 2, bg: "2" },
+    { id: 3, bg: "3" },
+    { id: 4, bg: "4" },
+  ]);
+
+  const [box1, setBox1] = useState({
+    type: "page",
+    value: "",
+    order: 1,
+    show: true
+  });
+  const [box2, setBox2] = useState({
+    type: "page",
+    value: "",
+    order: 2,
+    show: true
+  });
+  const [box3, setBox3] = useState({
+    type: "page",
+    value: "",
+    order: 3,
+    show: true
+  });
+  const [box4, setBox4] = useState({
+    type: "page",
+    value: "",
+    order: 4,
+    show: true
+  });
+
   const { user } = useAuthContext()
 
 
@@ -97,8 +130,59 @@ const View = () => {
   };
 
   const sendHandler = () => {
-    sendToKiosk()
+    const updateOrder = async () => {
+      // Update the order of slides in database
+
+    }
+    console.log(box);
   }
+
+  useEffect(() => {
+    const getCurrentPages = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/admin/pages", {
+          headers: { "Authorization": `Bearer ${user.token}` },
+        });
+        const responseData = await response.json();
+        const pages = responseData.slides;
+  
+        // Sort pages by order
+        pages.sort((a, b) => (a.order || 0) - (b.order || 0));
+  
+        // Assign pages to boxes
+        pages.forEach(page => {
+          const { order } = page;
+          switch (order) {
+            case 1:
+              setBox1(prevState => ({ ...prevState, ...page }));
+              break;
+            case 2:
+              setBox2(prevState => ({ ...prevState, ...page }));
+              break;
+            case 3:
+              setBox3(prevState => ({ ...prevState, ...page }));
+              break;
+            case 4:
+              setBox4(prevState => ({ ...prevState, ...page }));
+              break;
+            default:
+              break;
+          }
+        });
+  
+      } catch (error) {
+        console.error("Error fetching current pages", error);
+      }
+    };
+  
+    getCurrentPages();
+  }, []);
+  
+  // Use the state variables inside the useEffect to ensure you're seeing the latest state
+  useEffect(() => {
+    console.log(box1, box2, box3, box4);
+  }, [box1, box2, box3, box4]);
+  
 
   useEffect(() => {
     const getCoCID = async () => {
@@ -142,13 +226,10 @@ const View = () => {
     }
   }, [user]);
 
+
+
+
   const ControlPanel = () => {
-    const [box, setBox] = useState([
-      { id: 1, bg: "1" },
-      { id: 2, bg: "2" },
-      { id: 3, bg: "3" },
-      { id: 4, bg: "4" },
-    ]);
 
     const [selectedBox, setSelectedBox] = useState("1");
 
@@ -165,13 +246,16 @@ const View = () => {
     }
 
     useEffect(() => {
-      // Set the initial state of the `bg` property for each box based on its index
-      const initialBoxState = box.map((item, index) => ({
-        ...item,
-        bg: (index + 1).toString(),
-      }));
-      setBox(initialBoxState);
-    }, []);
+      // Only set the initial state if `box` is empty
+      if (box.length === 0) {
+        // Set the initial state of the `bg` property for each box based on its index
+        const initialBoxState = box.map((item, index) => ({
+          ...item,
+          bg: (index + 1).toString(),
+        }));
+        setBox(initialBoxState);
+      }
+    }, [box]); // Add `box` to the dependency array to prevent re-render loop
     
     const Slide = ({ slideNumber }) => {
       return (
@@ -182,25 +266,13 @@ const View = () => {
       );
     };
     
-    const saveHandler = async (event) => {
-      let pages = [
-        { _id: "65be0a0e338c753757082fb4", value: "", order: 1, show: true }, 
-        { _id: "65be0aa0338c753757082fb5", value: "", order: 2, show: true }, 
-        { _id: "65be0b788d27f07931c064b1", value: "", order: 3, show: true }, 
-        { _id: "65be0ba68d27f07931c064b2", value: "", order: 4, show: true }
-      ]
 
-      try {
-        const sendData = await fetch(`http://localhost:3001/api/admin/page/${pages.order}`, {
-          method: "patch",
-          body: dataToSend,
-        });
-      } catch (error) {
-        console.error("Error sending data:", error);
-      }
+    const saveHandler = () => {
+      console.log(selectedBox);  
       
-    };
-
+    }
+  
+    
     return (
       <>
       {/* Drag and drop boxes */}
